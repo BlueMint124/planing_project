@@ -20,6 +20,9 @@
 - `AGENTS.md`: 모든 Codex가 지켜야 하는 저장소 작업 규칙
 - `todo.md`: 제품 전체 백로그와 완료 조건
 - `docs/collaboration/work-board.md`: 현재 담당자, 브랜치, 상태, 의존성, PR
+- `docs/collaboration/feature-ownership.md`: 역할별 기능 분담과 의존성 순서
+- `docs/collaboration/prompts/`: 역할별 Codex 시작 프롬프트
+- `docs/design-docs/technology-stack.md`: 확정된 기술 스택과 데모 모드
 - `docs/contracts/`: 프론트엔드와 백엔드가 함께 사용하는 계약
 - `docs/handoffs/`: 기능별 작업 맥락과 인수인계 기록
 - GitHub Pull Request: 코드 리뷰, 검증 결과, 병합 이력
@@ -51,14 +54,15 @@ git status
 
 2. `docs/collaboration/work-board.md`에서 다른 작업자의 진행 중 기능과 의존성을
    확인한다.
-3. 새 기능 브랜치를 만든다.
+3. `docs/collaboration/feature-ownership.md`에서 자신의 역할과 범위를 확인한다.
+4. 새 기능 브랜치를 만든다.
 
 ```powershell
 git switch -c codex/<feature-name>
 ```
 
-4. 작업 보드에 담당자, 브랜치, 상태, 의존성을 등록하고 먼저 커밋 및 푸시한다.
-5. Codex에게 다음 시작 프롬프트를 제공한다.
+5. 작업 보드에 담당자, 브랜치, 상태, 의존성을 등록하고 먼저 커밋 및 푸시한다.
+6. 역할에 맞는 `docs/collaboration/prompts/` 프롬프트를 Codex에게 제공한다.
 
 ```text
 AGENTS.md, todo.md, docs/collaboration/README.md,
@@ -112,4 +116,3 @@ work-board.md에 먼저 기록해줘.
 - 검증 명령과 결과가 PR에 기록되어 있는가?
 - `todo.md`, 작업 보드, handoff 문서가 현재 상태를 반영하는가?
 - 비밀키, 개인정보, 불필요한 로그가 포함되지 않았는가?
-

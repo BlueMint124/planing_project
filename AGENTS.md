@@ -10,6 +10,9 @@
 - `todo.md`: 제품 개발 백로그, 결정 사항, 진행 상태, 완료 조건
 - `docs/collaboration/README.md`: 서로 다른 PC에서 작업하는 개발자와 Codex의 협업 흐름
 - `docs/collaboration/work-board.md`: 현재 담당자, 브랜치, 상태, 의존성, PR 요약
+- `docs/collaboration/feature-ownership.md`: 주 개발자와 제한 토큰 협업자의 기능 분담
+- `docs/collaboration/prompts/`: 각 작업자가 Codex 세션을 시작할 때 사용하는 프롬프트
+- `docs/design-docs/technology-stack.md`: 확정된 기술 스택과 데모 운영 방침
 - `docs/contracts/`: 프론트엔드와 백엔드가 함께 사용하는 계약
 - `docs/handoffs/`: 기능별 작업 맥락, 검증 결과, 남은 작업
 - `.github/pull_request_template.md`: Pull Request에 남겨야 하는 공유 맥락
@@ -160,9 +163,6 @@ Codex 대화 내용은 다른 PC에 자동으로 전달되지 않는다. 다른 
 
 다음 항목은 구현 전에 `todo.md`에서 결정하고 기록한다.
 
-- 프론트엔드, 백엔드, 저장소, 배포 기술 스택
-- AI 모델과 일정 생성 방식
-- 지도 및 장소 데이터 제공자
 - 예약 링크 제공 범위
 - 공유 결과 저장 기간
 - 비로그인 재생성 횟수 제한

@@ -16,6 +16,18 @@
 | 기능 | 담당자 | 브랜치 | 상태 | 의존성 | Handoff | PR |
 | --- | --- | --- | --- | --- | --- | --- |
 | 협업 하네스 | Codex | `codex/collaboration-harness` | review | 없음 | `docs/handoffs/collaboration-harness.md` | 생성 예정 |
+| 프로젝트 골격과 공통 계약 | 주 개발자 | `codex/project-foundation` | planned | 협업 하네스 병합 | 생성 예정 | 생성 예정 |
+| 여행 조건 입력 UI | 제한 토큰 협업자 | `codex/trip-input-ui` | planned | 프로젝트 골격과 공통 계약 | 생성 예정 | 생성 예정 |
+| 여행 스타일 및 멤버 선호 UI | 제한 토큰 협업자 | `codex/travel-preferences-ui` | planned | 프로젝트 골격과 공통 계약 | 생성 예정 | 생성 예정 |
+| 입력 검증 표시 UI | 제한 토큰 협업자 | `codex/form-validation-ui` | planned | 프로젝트 골격, 여행 조건 입력 UI | 생성 예정 | 생성 예정 |
+| 생성 로딩 및 실패 UI | 제한 토큰 협업자 | `codex/generation-status-ui` | planned | 프로젝트 골격과 공통 계약 | 생성 예정 | 생성 예정 |
+| 여행 결과 카드 UI | 제한 토큰 협업자 | `codex/trip-result-cards` | planned | 프로젝트 골격과 공통 계약 | 생성 예정 | 생성 예정 |
+| 공유 및 데모 화면 마감 | 제한 토큰 협업자 | `codex/share-demo-ui` | planned | 결과 카드 UI, 공유 결과 API | 생성 예정 | 생성 예정 |
+| 여행 생성 API | 주 개발자 | `codex/trip-generation-api` | planned | 프로젝트 골격과 공통 계약 | 생성 예정 | 생성 예정 |
+| 장소 및 동선 연동 | 주 개발자 | `codex/place-route-adapters` | planned | 여행 생성 API | 생성 예정 | 생성 예정 |
+| AI 일정 생성 | 주 개발자 | `codex/ai-itinerary-generation` | planned | 여행 생성 API | 생성 예정 | 생성 예정 |
+| 공유 결과 저장 및 조회 | 주 개발자 | `codex/share-trip-results` | planned | 프로젝트 골격과 공통 계약 | 생성 예정 | 생성 예정 |
+| 통합, 관찰 가능성, 배포 | 주 개발자 | `codex/integration-deployment` | planned | 모든 기능 | 생성 예정 | 생성 예정 |
 
 ## Shared File Lock
 
