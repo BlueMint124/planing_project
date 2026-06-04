@@ -16,7 +16,7 @@
 | 기능 | 담당자 | 브랜치 | 상태 | 의존성 | Handoff | PR |
 | --- | --- | --- | --- | --- | --- | --- |
 | 협업 하네스 | Codex | `codex/collaboration-harness` | review | 없음 | `docs/handoffs/collaboration-harness.md` | 생성 예정 |
-| 프로젝트 골격과 공통 계약 | 주 개발자 | `codex/project-foundation` | planned | 협업 하네스 병합 | 생성 예정 | 생성 예정 |
+| 프로젝트 골격과 공통 계약 | 주 개발자 | `codex/project-foundation` | review | 협업 하네스 문서 포함 브랜치에서 시작 | `docs/handoffs/project-foundation.md` | 생성 예정 |
 | 여행 조건 입력 UI | 제한 토큰 협업자 | `codex/trip-input-ui` | planned | 프로젝트 골격과 공통 계약 | 생성 예정 | 생성 예정 |
 | 여행 스타일 및 멤버 선호 UI | 제한 토큰 협업자 | `codex/travel-preferences-ui` | planned | 프로젝트 골격과 공통 계약 | 생성 예정 | 생성 예정 |
 | 입력 검증 표시 UI | 제한 토큰 협업자 | `codex/form-validation-ui` | planned | 프로젝트 골격, 여행 조건 입력 UI | 생성 예정 | 생성 예정 |
@@ -36,6 +36,7 @@
 
 | 파일 또는 경로 | 작업자 | 브랜치 | 이유 | 예상 해제 |
 | --- | --- | --- | --- | --- |
+| 프로젝트 설정, 공통 계약, `todo.md` | 주 개발자 | `codex/project-foundation` | 프로젝트 골격과 공통 계약 구성 | PR 병합 후 |
 
 ## Coordination Notes
 
