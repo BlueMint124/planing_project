@@ -8,6 +8,11 @@
 
 - `AGENTS.md`: 에이전트 작업 원칙과 저장소 지도
 - `todo.md`: 제품 개발 백로그, 결정 사항, 진행 상태, 완료 조건
+- `docs/collaboration/README.md`: 서로 다른 PC에서 작업하는 개발자와 Codex의 협업 흐름
+- `docs/collaboration/work-board.md`: 현재 담당자, 브랜치, 상태, 의존성, PR 요약
+- `docs/contracts/`: 프론트엔드와 백엔드가 함께 사용하는 계약
+- `docs/handoffs/`: 기능별 작업 맥락, 검증 결과, 남은 작업
+- `.github/pull_request_template.md`: Pull Request에 남겨야 하는 공유 맥락
 - `C:/Users/USER/Desktop/AI_여행계획생성기_기능명세서.md`: 원본 기능 명세서
 - GitHub 원격 저장소: `https://github.com/BlueMint124/planing_project.git`
 
@@ -77,7 +82,8 @@ API 계약을 변경할 때는 프론트엔드 타입, 서버 검증, 테스트,
 
 모든 작업은 다음 루프를 따른다.
 
-1. 작업 시작 전에 `AGENTS.md`, `todo.md`, 관련 명세와 기존 코드를 읽는다.
+1. 작업 시작 전에 `AGENTS.md`, `todo.md`, 협업 작업 보드, 관련 계약, handoff 문서,
+   기존 코드를 읽는다.
 2. 요구사항이 불명확하면 추측으로 외부 서비스나 비즈니스 정책을 고정하지 않는다.
 3. 작업 범위를 작고 검증 가능한 단위로 나누고 `todo.md`의 상태를 갱신한다.
 4. 기능 또는 버그 수정은 가능하면 실패하는 테스트를 먼저 작성한다.
@@ -92,7 +98,11 @@ API 계약을 변경할 때는 프론트엔드 타입, 서버 검증, 테스트,
 ## Version Control Workflow
 
 - 원격 저장소 이름은 `origin`을 사용한다.
+- `main`에 직접 커밋하거나 직접 푸시하지 않는다.
 - 새 기능 작업은 `codex/<feature-name>` 형식의 브랜치에서 진행한다.
+- 기능 브랜치를 만들기 전에 `main`에서 `git pull --ff-only origin main`을 실행한다.
+- 작업 시작 시 `docs/collaboration/work-board.md`에 담당자, 브랜치, 상태, 의존성을
+  등록한다.
 - 커밋 하나는 독립적으로 이해하고 검증할 수 있는 하나의 논리적 변경만 포함한다.
 - 기능 코드와 해당 테스트는 같은 커밋에 포함한다.
 - 커밋 메시지는 `feat:`, `fix:`, `docs:`, `test:`, `chore:`, `refactor:` 접두사를
@@ -102,7 +112,24 @@ API 계약을 변경할 때는 프론트엔드 타입, 서버 검증, 테스트,
 - 검증에 실패한 기능이나 미완성 상태를 완료된 기능으로 표시하거나 푸시하지 않는다.
 - 강제 푸시는 사용하지 않는다.
 - 공유 브랜치의 기존 커밋을 재작성하지 않는다.
-- 푸시 후 `todo.md`에서 완료된 작업과 남은 작업을 갱신한다.
+- 공통 파일을 수정하기 전에 작업 보드의 `Shared File Lock`에 기록한다.
+- API, 데이터 타입, 상태 모델 변경은 `docs/contracts/`에 기록한다.
+- 푸시 전 `todo.md`, 작업 보드, 기능별 handoff 문서를 갱신한다.
+- 기능 브랜치는 Pull Request를 통해서만 `main`에 반영한다.
+- Pull Request에는 계약 변경, 다른 작업에 미치는 영향, 검증 명령과 결과를 기록한다.
+
+## Multi-Agent Context Sharing
+
+Codex 대화 내용은 다른 PC에 자동으로 전달되지 않는다. 다른 개발자와 Codex가 알아야
+하는 맥락은 저장소에 기록하고 커밋해야 한다.
+
+- 현재 작업의 소유권과 의존성은 `docs/collaboration/work-board.md`에 기록한다.
+- 공통 API와 데이터 모델의 기준은 `docs/contracts/`에 기록한다.
+- 구현 결정, 주요 파일, 검증 결과, 남은 작업은 `docs/handoffs/<feature-name>.md`에
+  기록한다.
+- 코드 리뷰와 병합 판단에 필요한 내용은 Pull Request에 기록한다.
+- 대화에서만 합의한 내용은 결정으로 간주하지 않는다.
+- 상세 절차는 `docs/collaboration/README.md`를 따른다.
 
 ## Engineering Guardrails
 
@@ -127,6 +154,7 @@ API 계약을 변경할 때는 프론트엔드 타입, 서버 검증, 테스트,
 - 관련 문서와 `todo.md`가 현재 상태를 반영한다.
 - 실행 가능한 검증 명령과 결과를 작업 보고에 남긴다.
 - 기능 단위 커밋이 원격 저장소에 푸시되어 있다.
+- 기능별 handoff 문서와 Pull Request가 다른 작업자가 이해할 수 있는 상태다.
 
 ## Pending Decisions
 
