@@ -12,6 +12,8 @@
 - docs/collaboration/work-board.md
 - docs/collaboration/feature-ownership.md
 - docs/design-docs/technology-stack.md
+- DESIGN.md
+- docs/ui-design/screens.md에서 현재 기능에 해당하는 화면
 - 현재 기능과 직접 관련된 docs/contracts 문서
 - 현재 기능과 직접 관련된 docs/handoffs 문서
 - 현재 기능이 사용하는 공통 타입, mock 데이터, UI 파일
@@ -29,11 +31,13 @@
 6. 백엔드 Route Handler, AI 프롬프트, Google API 어댑터, Supabase 코드를 수정하지 마.
 7. 공통 타입이나 계약이 부족하면 새로 만들지 말고 work-board 상태를 blocked로 바꾸고
    필요한 계약을 handoff 문서에 짧게 기록해.
-8. 모바일 우선 UI, 로딩, 빈 상태, 오류 상태, 접근성을 포함해 구현해.
-9. 관련 컴포넌트 테스트를 작성하고 실행해.
-10. 작업 완료 후 docs/handoffs/<feature-name>.md와 work-board.md를 갱신해.
-11. 검증이 통과한 커밋을 만들고 원격 브랜치에 push한 뒤 PR을 준비해.
-12. main에는 직접 push하지 마.
+8. 데스크톱 Smart Dashboard를 기준으로 UI를 구현하고, 1024px 미만에서는 핵심
+   기능이 유지되는 단일 컬럼 반응형을 제공해.
+9. DESIGN.md와 관련 화면 명세의 레이아웃, 상태, 접근성 요구사항을 따라.
+10. 관련 컴포넌트 테스트를 작성하고 실행해.
+11. 작업 완료 후 docs/handoffs/<feature-name>.md와 work-board.md를 갱신해.
+12. 검증이 통과한 커밋을 만들고 원격 브랜치에 push한 뒤 PR을 준비해.
+13. main에는 직접 push하지 마.
 
 작업 중 관련 없는 파일을 읽거나 수정하지 마. 설명은 짧게 유지하고, 구현과 테스트에
 집중해. 공통 계약 변경이 필요하면 스스로 확장하지 말고 주 개발자에게 넘겨.

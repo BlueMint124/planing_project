@@ -23,6 +23,8 @@
 - `docs/collaboration/feature-ownership.md`: 역할별 기능 분담과 의존성 순서
 - `docs/collaboration/prompts/`: 역할별 Codex 시작 프롬프트
 - `docs/design-docs/technology-stack.md`: 확정된 기술 스택과 데모 모드
+- `DESIGN.md`: 프론트엔드 공통 디자인 시스템
+- `docs/ui-design/screens.md`: 화면별 개발 명세와 시각 참조
 - `docs/contracts/`: 프론트엔드와 백엔드가 함께 사용하는 계약
 - `docs/handoffs/`: 기능별 작업 맥락과 인수인계 기록
 - GitHub Pull Request: 코드 리뷰, 검증 결과, 병합 이력
@@ -55,14 +57,15 @@ git status
 2. `docs/collaboration/work-board.md`에서 다른 작업자의 진행 중 기능과 의존성을
    확인한다.
 3. `docs/collaboration/feature-ownership.md`에서 자신의 역할과 범위를 확인한다.
-4. 새 기능 브랜치를 만든다.
+4. UI 작업이면 `DESIGN.md`와 관련 화면 명세를 확인한다.
+5. 새 기능 브랜치를 만든다.
 
 ```powershell
 git switch -c codex/<feature-name>
 ```
 
-5. 작업 보드에 담당자, 브랜치, 상태, 의존성을 등록하고 먼저 커밋 및 푸시한다.
-6. 역할에 맞는 `docs/collaboration/prompts/` 프롬프트를 Codex에게 제공한다.
+6. 작업 보드에 담당자, 브랜치, 상태, 의존성을 등록하고 먼저 커밋 및 푸시한다.
+7. 역할에 맞는 `docs/collaboration/prompts/` 프롬프트를 Codex에게 제공한다.
 
 ```text
 AGENTS.md, todo.md, docs/collaboration/README.md,

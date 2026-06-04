@@ -13,6 +13,9 @@
 - `docs/collaboration/feature-ownership.md`: 주 개발자와 제한 토큰 협업자의 기능 분담
 - `docs/collaboration/prompts/`: 각 작업자가 Codex 세션을 시작할 때 사용하는 프롬프트
 - `docs/design-docs/technology-stack.md`: 확정된 기술 스택과 데모 운영 방침
+- `DESIGN.md`: UI 디자인 시스템과 공통 컴포넌트 규칙
+- `docs/ui-design/screens.md`: 화면별 기능, 상태, 레이아웃, 완료 조건
+- `docs/ui-design/assets/`: 승인된 데스크톱 UI 시각 참조
 - `docs/contracts/`: 프론트엔드와 백엔드가 함께 사용하는 계약
 - `docs/handoffs/`: 기능별 작업 맥락, 검증 결과, 남은 작업
 - `.github/pull_request_template.md`: Pull Request에 남겨야 하는 공유 맥락
@@ -86,7 +89,7 @@ API 계약을 변경할 때는 프론트엔드 타입, 서버 검증, 테스트,
 모든 작업은 다음 루프를 따른다.
 
 1. 작업 시작 전에 `AGENTS.md`, `todo.md`, 협업 작업 보드, 관련 계약, handoff 문서,
-   기존 코드를 읽는다.
+   `DESIGN.md`, 관련 화면 명세, 기존 코드를 읽는다.
 2. 요구사항이 불명확하면 추측으로 외부 서비스나 비즈니스 정책을 고정하지 않는다.
 3. 작업 범위를 작고 검증 가능한 단위로 나누고 `todo.md`의 상태를 갱신한다.
 4. 기능 또는 버그 수정은 가능하면 실패하는 테스트를 먼저 작성한다.

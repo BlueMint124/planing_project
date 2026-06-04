@@ -8,6 +8,8 @@ AGENTS.md와 docs/collaboration/prompts/main-developer-start.md의 규칙을 따
 
 먼저 읽을 문서:
 - docs/design-docs/technology-stack.md
+- DESIGN.md
+- docs/ui-design/screens.md
 - docs/collaboration/feature-ownership.md
 - docs/contracts/README.md
 - 원본 기능 명세서
@@ -27,6 +29,7 @@ AGENTS.md와 docs/collaboration/prompts/main-developer-start.md의 규칙을 따
 - DEMO_MODE를 포함한 .env.example
 - npm run dev, test, lint, typecheck, build 명령
 - README 또는 개발 시작 문서
+- DESIGN.md의 색상, 타이포그래피, 간격 토큰을 Tailwind 또는 전역 스타일에 반영
 
 제외 범위:
 - 실제 OpenAI API 호출

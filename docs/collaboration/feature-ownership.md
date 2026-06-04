@@ -79,6 +79,9 @@ all features
 협업자의 첫 작업은 foundation 병합 후
 `docs/collaboration/prompts/collaborator-trip-input-ui.md` 프롬프트를 사용한다.
 
+UI 기능별 프롬프트는 `docs/collaboration/prompts/`에 있으며, 모든 UI 작업은
+`DESIGN.md`와 `docs/ui-design/screens.md`를 구현 기준으로 사용한다.
+
 ## Token-Saving Rules For Collaborator
 
 - 작업 시작 시 자신의 기능과 직접 관련된 문서 및 파일만 읽는다.

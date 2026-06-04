@@ -7,7 +7,9 @@ AGENTS.md와 docs/collaboration/prompts/collaborator-start.md의 규칙을 따�
 브랜치는 codex/trip-result-cards를 사용해.
 
 구현 범위:
+- DESIGN.md와 docs/ui-design/screens.md의 여행 결과 화면
 - 저장소의 제주 mock 결과를 사용하는 결과 화면
+- 데스크톱 왼쪽 일정 타임라인과 오른쪽 비용 요약 패널
 - 총 예상 비용과 1인당 예상 비용 요약
 - 예산 상태 표시
 - 일자별 추천 일정과 장소 카드
@@ -26,7 +28,8 @@ AGENTS.md와 docs/collaboration/prompts/collaborator-start.md의 규칙을 따�
 완료 조건:
 - mock 결과의 비용과 일정이 사용자가 이해할 수 있게 표시된다.
 - 예약 링크 버튼이 안전한 외부 링크 동작을 사용한다.
-- 모바일 화면에서 결과 카드가 깨지지 않는다.
+- 데스크톱에서 일정과 비용 요약이 동시에 보인다.
+- 1024px 미만에서는 단일 컬럼으로 전환되며 결과 카드가 깨지지 않는다.
 - 관련 테스트가 통과한다.
 - work-board와 docs/handoffs/trip-result-cards.md를 갱신하고 브랜치를 push한다.
 ```

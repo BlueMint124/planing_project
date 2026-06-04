@@ -40,5 +40,6 @@
 ## Coordination Notes
 
 - API와 데이터 타입의 기준은 `docs/contracts/`에 기록한다.
+- UI 구현 기준은 `DESIGN.md`와 `docs/ui-design/screens.md`에 기록한다.
 - 작업 보드는 요약만 유지한다. 긴 설명은 handoff 문서에 작성한다.
 - 완료된 작업은 행을 삭제하지 않고 상태를 `done`으로 바꿔 이력을 보존한다.

@@ -26,6 +26,8 @@
 - 토큰 예산을 고려한 기능별 담당 범위 작성
 - 주 개발자와 제한 토큰 협업자용 시작 프롬프트 작성
 - 프로젝트 골격과 첫 협업자 UI 작업의 전용 프롬프트 작성
+- 데스크톱 Smart Dashboard 디자인 시스템과 화면별 UI 명세 작성
+- 입력, 취향, 생성 상태, 결과 화면의 시각 참조 이미지 추가
 
 ## Changed Contracts
 
@@ -40,6 +42,8 @@
 - `docs/design-docs/technology-stack.md`: 기술 스택과 데모 모드
 - `docs/collaboration/feature-ownership.md`: 기능 분담과 의존성
 - `docs/collaboration/prompts/`: 역할별 Codex 시작 프롬프트
+- `DESIGN.md`: UI 디자인 시스템
+- `docs/ui-design/screens.md`: 화면별 UI 개발 명세
 
 ## Verification
 

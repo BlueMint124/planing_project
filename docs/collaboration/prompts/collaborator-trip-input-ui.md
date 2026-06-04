@@ -7,7 +7,8 @@ AGENTS.md와 docs/collaboration/prompts/collaborator-start.md의 규칙을 따�
 브랜치는 codex/trip-input-ui를 사용해.
 
 구현 범위:
-- 모바일 우선 단계형 입력 화면
+- DESIGN.md와 docs/ui-design/screens.md의 여행 기본 정보 입력 화면
+- 데스크톱 Smart Dashboard의 왼쪽 입력 폼과 오른쪽 실시간 요약 패널
 - 지역 입력
 - 여행 기간 preset 선택
 - 1인당 예산 입력
@@ -26,7 +27,8 @@ AGENTS.md와 docs/collaboration/prompts/collaborator-start.md의 규칙을 따�
 
 완료 조건:
 - 사용자가 지역, 기간, 예산, 인원을 입력하고 단계 사이를 이동할 수 있다.
-- 모바일 화면에서 입력 요소가 깨지지 않는다.
+- 데스크톱에서 입력 폼과 요약 패널이 동시에 보인다.
+- 1024px 미만에서는 단일 컬럼으로 전환되며 입력 요소가 깨지지 않는다.
 - 공통 타입과 mock 데이터만 사용한다.
 - 관련 테스트가 통과한다.
 - work-board와 docs/handoffs/trip-input-ui.md를 갱신하고 브랜치를 push한다.
