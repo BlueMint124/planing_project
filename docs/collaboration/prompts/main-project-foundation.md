@@ -42,4 +42,3 @@ AGENTS.md와 docs/collaboration/prompts/main-developer-start.md의 규칙을 따
 - todo.md, work-board.md, docs/handoffs/project-foundation.md를 갱신한다.
 - 브랜치를 push하고 Pull Request를 준비한다.
 ```
-

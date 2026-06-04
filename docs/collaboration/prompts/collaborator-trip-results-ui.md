@@ -30,4 +30,3 @@ AGENTS.md와 docs/collaboration/prompts/collaborator-start.md의 규칙을 따�
 - 관련 테스트가 통과한다.
 - work-board와 docs/handoffs/trip-result-cards.md를 갱신하고 브랜치를 push한다.
 ```
-
