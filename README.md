@@ -49,6 +49,15 @@ npm run dev
 흐름을 구현할 수 있다. 실제 Route Handler는 후속 `trip-generation-api` 기능에서
 추가한다.
 
+## Deployment Readiness
+
+- CI workflow: `.github/workflows/ci.yml`
+- Demo deployment checklist: `docs/deployment/vercel-demo.md`
+- Health check: `GET /api/health`
+
+CI runs tests, lint, production build, and typecheck on pull requests and pushes
+to `main`.
+
 ## Collaboration
 
 - `AGENTS.md`
