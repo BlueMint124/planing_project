@@ -10,9 +10,11 @@
 ## Demo And Live Behavior
 
 - `DEMO_MODE=true`: 외부 API를 호출하지 않고 검증된 제주 mock 결과를 반환한다.
-- `DEMO_MODE`가 `true`가 아니면 현재는 실제 생성기가 구성되지 않았으므로
-  `GENERATION_FAILED` 응답을 반환한다.
-- 후속 AI 및 장소 연동은 동일한 요청과 응답 계약을 유지해야 한다.
+- `DEMO_MODE`가 `true`가 아니면 서버 환경 변수로 live generator를 구성한다.
+- live generator에는 `OPENAI_API_KEY`, `GOOGLE_MAPS_API_KEY`가 필요하다.
+- `OPENAI_MODEL`이 없으면 `gpt-5.4-mini`를 사용한다.
+- live key가 없거나 외부 연동 또는 AI 생성이 실패하면 `GENERATION_FAILED` 응답을 반환한다.
+- AI 및 장소 연동은 동일한 요청과 응답 계약을 유지해야 한다.
 
 ## Request
 
@@ -125,4 +127,5 @@
 - `src/features/trips/api-client.ts`
 - `src/features/trips/trip-form.ts`
 - `src/features/trips/generation-service.ts`
+- `src/features/trips/live-trip-generator.ts`
 - `app/api/trips/generate/route.ts`

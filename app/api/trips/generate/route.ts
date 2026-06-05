@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { createTripGenerationService } from "@/src/features/trips/generation-service";
+import { createLiveTripGenerator } from "@/src/features/trips/live-trip-generator";
 import { mockJejuTripResponse } from "@/src/features/trips/mock-trip";
 
 function createRequestId() {
@@ -20,9 +21,9 @@ function createGenerator() {
     return async () => mockJejuTripResponse;
   }
 
-  return async () => {
-    throw new Error("Live trip generation is not configured.");
-  };
+  return createLiveTripGenerator({
+    env: process.env,
+  });
 }
 
 export async function POST(request: Request) {

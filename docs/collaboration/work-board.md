@@ -26,6 +26,7 @@
 | 여행 생성 API | 주 개발자 | `codex/trip-generation-api` | review | 프로젝트 골격과 공통 계약 | `docs/handoffs/trip-generation-api.md` | 생성 예정 |
 | 장소 및 동선 연동 | 주 개발자 | `codex/place-route-adapters` | review | 여행 생성 API | `docs/handoffs/place-route-adapters.md` | 생성 예정 |
 | AI 일정 생성 | 주 개발자 | `codex/ai-itinerary-generation` | review | 여행 생성 API, 장소 및 동선 연동 | `docs/handoffs/ai-itinerary-generation.md` | 생성 예정 |
+| 비데모 생성 경로 연결 | 주 개발자 | `codex/live-trip-generation-wiring` | review | AI 일정 생성 | `docs/handoffs/live-trip-generation-wiring.md` | 생성 예정 |
 | 공유 결과 저장 및 조회 | 주 개발자 | `codex/share-trip-results` | planned | 프로젝트 골격과 공통 계약 | 생성 예정 | 생성 예정 |
 | 통합, 관찰 가능성, 배포 | 주 개발자 | `codex/integration-deployment` | planned | 모든 기능 | 생성 예정 | 생성 예정 |
 
@@ -40,6 +41,7 @@
 | `app/api/trips/generate`, 생성 서비스, API 계약 | 주 개발자 | `codex/trip-generation-api` | 여행 생성 API 구현 | PR 병합 후 |
 | 장소 및 동선 어댑터, `todo.md` | 주 개발자 | `codex/place-route-adapters` | Google Places 및 Routes 어댑터 구현 | PR 병합 후 |
 | AI 일정 생성기, AI 계약, `todo.md` | 주 개발자 | `codex/ai-itinerary-generation` | OpenAI Structured Outputs 생성기 구현 | PR 병합 후 |
+| 비데모 생성 경로, env 예시, API 계약 | 주 개발자 | `codex/live-trip-generation-wiring` | 실제 생성기 조립 및 라우트 연결 | PR 병합 후 |
 
 ## Coordination Notes
 

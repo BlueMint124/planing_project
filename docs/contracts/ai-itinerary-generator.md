@@ -68,12 +68,12 @@ model route output, it recalculates:
 
 ## Current Integration Status
 
-This feature implements the provider-neutral generation boundary. The live route
-handler still needs a follow-up wiring task to instantiate:
+The live route handler now instantiates:
 
 - Google Places provider
 - Google Routes provider
 - OpenAI client
 - `createTripItineraryGenerator`
 
-`DEMO_MODE=true` behavior remains unchanged for presentation safety.
+`DEMO_MODE=true` behavior remains unchanged for presentation safety. Live smoke
+testing with real API keys is still pending.
