@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   createHttpTripApiClient,
   type TripApiClient,
@@ -14,10 +14,11 @@ interface SharedTripPageProps {
   apiClient?: TripApiClient;
 }
 
-export function SharedTripPage({
-  tripId,
-  apiClient = createHttpTripApiClient(),
-}: SharedTripPageProps) {
+export function SharedTripPage({ tripId, apiClient }: SharedTripPageProps) {
+  const resolvedApiClient = useMemo(
+    () => apiClient ?? createHttpTripApiClient(),
+    [apiClient],
+  );
   const [trip, setTrip] = useState<TripGenerationResponse | null>(null);
   const [expiresAt, setExpiresAt] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -31,14 +32,17 @@ export function SharedTripPage({
       setError(null);
 
       try {
-        const shared = await apiClient.getSharedTrip(tripId);
+        const shared = await resolvedApiClient.getSharedTrip(tripId);
 
         if (isMounted) {
           setTrip(shared.trip);
           setExpiresAt(shared.expiresAt);
+          setError(null);
         }
       } catch {
         if (isMounted) {
+          setTrip(null);
+          setExpiresAt(null);
           setError("공유된 여행 결과를 찾을 수 없습니다.");
         }
       } finally {
@@ -53,7 +57,7 @@ export function SharedTripPage({
     return () => {
       isMounted = false;
     };
-  }, [apiClient, tripId]);
+  }, [resolvedApiClient, tripId]);
 
   return (
     <main className="demo-shell shared-shell">
