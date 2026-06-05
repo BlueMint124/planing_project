@@ -23,7 +23,7 @@
 | 생성 로딩 및 실패 UI | 제한 토큰 협업자 | `codex/generation-status-ui` | planned | 프로젝트 골격과 공통 계약 | 생성 예정 | 생성 예정 |
 | 여행 결과 카드 UI | 제한 토큰 협업자 | `codex/trip-result-cards` | planned | 프로젝트 골격과 공통 계약 | 생성 예정 | 생성 예정 |
 | 공유 및 데모 화면 마감 | 제한 토큰 협업자 | `codex/share-demo-ui` | planned | 결과 카드 UI, 공유 결과 API | 생성 예정 | 생성 예정 |
-| 여행 생성 API | 주 개발자 | `codex/trip-generation-api` | planned | 프로젝트 골격과 공통 계약 | 생성 예정 | 생성 예정 |
+| 여행 생성 API | 주 개발자 | `codex/trip-generation-api` | review | 프로젝트 골격과 공통 계약 | `docs/handoffs/trip-generation-api.md` | 생성 예정 |
 | 장소 및 동선 연동 | 주 개발자 | `codex/place-route-adapters` | planned | 여행 생성 API | 생성 예정 | 생성 예정 |
 | AI 일정 생성 | 주 개발자 | `codex/ai-itinerary-generation` | planned | 여행 생성 API | 생성 예정 | 생성 예정 |
 | 공유 결과 저장 및 조회 | 주 개발자 | `codex/share-trip-results` | planned | 프로젝트 골격과 공통 계약 | 생성 예정 | 생성 예정 |
@@ -37,6 +37,7 @@
 | 파일 또는 경로 | 작업자 | 브랜치 | 이유 | 예상 해제 |
 | --- | --- | --- | --- | --- |
 | 프로젝트 설정, 공통 계약, `todo.md` | 주 개발자 | `codex/project-foundation` | 프로젝트 골격과 공통 계약 구성 | PR 병합 후 |
+| `app/api/trips/generate`, 생성 서비스, API 계약 | 주 개발자 | `codex/trip-generation-api` | 여행 생성 API 구현 | PR 병합 후 |
 
 ## Coordination Notes
 

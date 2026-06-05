@@ -5,6 +5,14 @@
 - Method: `POST`
 - Path: `/api/trips/generate`
 - Content Type: `application/json`
+- Route Handler: `app/api/trips/generate/route.ts`
+
+## Demo And Live Behavior
+
+- `DEMO_MODE=true`: 외부 API를 호출하지 않고 검증된 제주 mock 결과를 반환한다.
+- `DEMO_MODE`가 `true`가 아니면 현재는 실제 생성기가 구성되지 않았으므로
+  `GENERATION_FAILED` 응답을 반환한다.
+- 후속 AI 및 장소 연동은 동일한 요청과 응답 계약을 유지해야 한다.
 
 ## Request
 
@@ -88,9 +96,33 @@
 }
 ```
 
+## Status Codes
+
+| 상태 코드 | 오류 코드 | 의미 |
+| --- | --- | --- |
+| `200` | 없음 | 일정 생성 성공 |
+| `400` | `INVALID_REQUEST` | 필수값 누락 또는 잘못된 입력값 |
+| `500` | `GENERATION_FAILED` | 생성기 실패, AI 실패, 잘못된 생성 결과 |
+
+## Logging
+
+서버 로그에는 다음 필드를 기록한다.
+
+- `event`
+- `requestId`
+- `createdAt`
+- `inputSummary`
+- `responseTimeMs`
+- `failureCode`
+
+`inputSummary`에는 목적지, 기간, 예산, 인원, 스타일, 멤버 수만 포함한다. 멤버 이름,
+원본 선호 정보, 비밀키, 내부 오류 원문은 로그에 남기지 않는다.
+
 ## Code Source Of Truth
 
 - `src/features/trips/contracts.ts`
 - `src/features/trips/mock-trip.ts`
 - `src/features/trips/api-client.ts`
 - `src/features/trips/trip-form.ts`
+- `src/features/trips/generation-service.ts`
+- `app/api/trips/generate/route.ts`
