@@ -27,6 +27,15 @@
 - `app/page.tsx`, `app/share/[tripId]/page.tsx`
   - App Router 진입점 연결
 
+## 2026-06-06 One-Day Polish
+
+- 여행 기간을 발표용 고정 표시에서 실제 선택 컨트롤로 확장했다.
+- 여행 스타일을 전체 옵션 토글로 확장했다.
+- 멤버 이름, 선호, 비선호를 직접 편집하고 멤버를 추가/삭제할 수 있게 했다.
+- 생성 실패 후 `다시 시도`, 결과 생성 후 `현재 조건으로 재생성` 동작을 추가했다.
+- Playwright smoke는 `localhost` 기준으로 실행한다. `127.0.0.1`에서는 Next dev hydration이
+  붙지 않는 현상이 있어 사용하지 않는다.
+
 ## Verification
 
 통과:
@@ -39,11 +48,9 @@
 - `npm.cmd run build`
 - `git diff --check`
 - Chrome Playwright smoke: `/` 생성 -> 공유 URL 생성 -> `/share/trip_demo_jeju_001` 조회
+- `npm.cmd run test:e2e -- tests/e2e/demo-polish.spec.ts`
 
 ## Remaining Work
 
-- 여행 기간 preset 전체 선택 UI
-- 여행 스타일 전체 다중 선택 UI
-- 멤버별 선호/비선호 직접 입력 UI
 - 실제 지도 SDK 시각화
-- Playwright 기반 발표 시연 E2E
+- Vercel 배포 URL에서 smoke 확인

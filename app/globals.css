@@ -215,6 +215,57 @@ select {
   gap: 12px;
 }
 
+.option-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.compact-options .option-button {
+  flex: 1 1 92px;
+}
+
+.style-options .option-button {
+  flex: 1 1 104px;
+}
+
+.option-button,
+.ghost-button,
+.text-button {
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--foreground);
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.option-button {
+  position: relative;
+  padding: 10px 12px;
+  text-align: center;
+}
+
+.option-button.selected {
+  border-color: color-mix(in srgb, var(--primary) 50%, var(--border));
+  background: var(--primary-soft);
+  color: var(--primary-hover);
+}
+
+.option-button input {
+  position: absolute;
+  inset: 0;
+  cursor: pointer;
+  opacity: 0;
+}
+
+.option-button:hover,
+.ghost-button:hover,
+.text-button:hover {
+  border-color: var(--primary);
+  color: var(--primary-hover);
+}
+
 .readonly-pill,
 .chip,
 .trip-id {
@@ -248,6 +299,66 @@ select {
   border: 1px dashed var(--border);
   border-radius: 16px;
   background: #fbfdff;
+}
+
+.member-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.member-header p {
+  margin: 6px 0 0;
+}
+
+.ghost-button {
+  flex: 0 0 auto;
+  padding: 9px 12px;
+}
+
+.member-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.member-card {
+  display: grid;
+  gap: 10px;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: #fff;
+}
+
+.member-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.member-card label {
+  display: grid;
+  gap: 6px;
+  color: var(--muted-foreground);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.member-card input {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 10px 12px;
+  color: var(--foreground);
+}
+
+.text-button {
+  padding: 6px 10px;
+  color: var(--destructive);
+  font-size: 12px;
 }
 
 .primary-button,
@@ -284,6 +395,11 @@ select {
   padding: 12px 16px;
   background: var(--primary);
   color: white;
+}
+
+.full-width {
+  width: 100%;
+  margin-top: 14px;
 }
 
 .error-message {
