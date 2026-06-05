@@ -51,3 +51,14 @@
 - UI 구현 기준은 `DESIGN.md`와 `docs/ui-design/screens.md`에 기록한다.
 - 작업 보드는 요약만 유지한다. 긴 설명은 handoff 문서에 작성한다.
 - 완료된 작업은 행을 삭제하지 않고 상태를 `done`으로 바꿔 이력을 보존한다.
+# 2026-06-06 Active Addition
+
+| 기능 | 담당자 | 브랜치 | 상태 | 의존성 | Handoff | PR |
+| --- | --- | --- | --- | --- | --- | --- |
+| 발표용 데모 MVP UI | 주 개발자 | `codex/demo-mvp-ui` | in-progress | 생성/공유 API | `docs/handoffs/demo-mvp-ui.md` | 생성 예정 |
+
+## 2026-06-06 Shared File Lock Addition
+
+| 파일 또는 경로 | 작업자 | 브랜치 | 이유 | 예상 해제 |
+| --- | --- | --- | --- | --- |
+| 데모 MVP UI, `todo.md`, `README.md` | 주 개발자 | `codex/demo-mvp-ui` | 발표 시연용 입력-생성-결과-공유 흐름 구현 | PR 병합 후 |

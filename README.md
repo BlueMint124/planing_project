@@ -64,3 +64,14 @@ to `main`.
 - `docs/collaboration/README.md`
 - `docs/collaboration/work-board.md`
 - `docs/collaboration/feature-ownership.md`
+# Demo MVP Flow
+
+현재 데모 UI는 데스크톱 발표 시연을 기준으로 다음 흐름을 제공한다.
+
+- `/`: 여행 지역, 1인당 예산, 인원을 입력하고 `POST /api/trips/generate`로 일정 생성
+- 생성 결과: 비용 요약, 일자별 장소 카드, 외부 상세 링크, 좌표 기반 동선 요약 표시
+- 공유: `POST /api/trips/share`로 공유 URL 생성
+- `/share/[tripId]`: `GET /api/trips/[tripId]`로 공유된 결과 조회
+
+지도는 발표 MVP에서 SDK 연동 전 단계로 좌표와 방문 순서를 보여주는 패널로 구현했다.
+이후 Google Maps 시각화로 교체할 수 있도록 결과 컴포넌트를 분리했다.
