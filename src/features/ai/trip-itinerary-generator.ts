@@ -1,4 +1,7 @@
-import type { PlaceProvider } from "@/src/features/places/place-provider";
+import type {
+  PlaceCandidate,
+  PlaceProvider,
+} from "@/src/features/places/place-provider";
 import type { RouteProvider } from "@/src/features/routes/route-provider";
 import type {
   TripGenerationRequest,
@@ -23,6 +26,27 @@ function getAdjacentPairs<T>(items: T[]) {
   return items.slice(0, -1).map((item, index) => [item, items[index + 1]] as const);
 }
 
+async function computeRouteHint(
+  dependencies: Pick<TripItineraryGeneratorDependencies, "routeProvider">,
+  [from, to]: readonly [PlaceCandidate, PlaceCandidate],
+): Promise<RouteHint | null> {
+  try {
+    const route = await dependencies.routeProvider.computeRoute({
+      origin: from.coordinates,
+      destination: to.coordinates,
+    });
+
+    return {
+      fromPlaceId: from.id,
+      toPlaceId: to.id,
+      durationMinutes: route.durationMinutes,
+      distanceMeters: route.distanceMeters,
+    };
+  } catch {
+    return null;
+  }
+}
+
 export function createTripItineraryGenerator(
   dependencies: TripItineraryGeneratorDependencies,
 ) {
@@ -40,21 +64,13 @@ export function createTripItineraryGenerator(
         throw new Error("Not enough place candidates to generate an itinerary.");
       }
 
-      const routeHints: RouteHint[] = await Promise.all(
-        getAdjacentPairs(places).map(async ([from, to]) => {
-          const route = await dependencies.routeProvider.computeRoute({
-            origin: from.coordinates,
-            destination: to.coordinates,
-          });
-
-          return {
-            fromPlaceId: from.id,
-            toPlaceId: to.id,
-            durationMinutes: route.durationMinutes,
-            distanceMeters: route.distanceMeters,
-          };
-        }),
-      );
+      const routeHints = (
+        await Promise.all(
+          getAdjacentPairs(places).map((pair) =>
+            computeRouteHint(dependencies, pair),
+          ),
+        )
+      ).filter((hint): hint is RouteHint => hint !== null);
 
       return dependencies.aiGenerator.generate({
         request,

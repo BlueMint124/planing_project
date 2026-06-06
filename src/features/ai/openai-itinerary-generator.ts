@@ -16,7 +16,7 @@ const openAITripGenerationResponseSchema = tripGenerationResponseSchema.extend({
   route: z
     .array(
       routeItemSchema.extend({
-        bookingUrl: z.url().nullable(),
+        bookingUrl: z.string().nullable(),
       }),
     )
     .min(1),

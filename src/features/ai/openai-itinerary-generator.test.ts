@@ -65,4 +65,25 @@ describe("createOpenAIItineraryGenerator", () => {
       }),
     ).rejects.toThrow("AI itinerary output failed schema validation.");
   });
+
+  it("does not send unsupported URL format constraints to Structured Outputs", async () => {
+    const parse = vi.fn().mockResolvedValue({
+      output_parsed: mockJejuTripResponse,
+    });
+    const generator = createOpenAIItineraryGenerator({
+      client: { responses: { parse } },
+      model: "gpt-5.4-mini",
+      createTripId: () => "trip_ai_001",
+    });
+
+    await generator.generate({
+      request: mockJejuTripRequest,
+      places: [],
+      routeHints: [],
+    });
+
+    expect(JSON.stringify(parse.mock.calls[0][0])).not.toContain(
+      '"format":"uri"',
+    );
+  });
 });

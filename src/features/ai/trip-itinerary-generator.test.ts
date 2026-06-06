@@ -80,4 +80,55 @@ describe("createTripItineraryGenerator", () => {
       "Not enough place candidates to generate an itinerary.",
     );
   });
+
+  it("continues generation when an individual route hint cannot be computed", async () => {
+    const places = [
+      {
+        id: "place_1",
+        name: "First Place",
+        category: "food",
+        coordinates: { lat: 34.7, lng: 135.49 },
+      },
+      {
+        id: "place_2",
+        name: "Second Place",
+        category: "photo",
+        coordinates: { lat: 34.66, lng: 135.5 },
+      },
+      {
+        id: "place_3",
+        name: "Third Place",
+        category: "culture",
+        coordinates: { lat: 34.68, lng: 135.52 },
+      },
+    ];
+    const generate = vi.fn().mockResolvedValue(mockJejuTripResponse);
+
+    const generator = createTripItineraryGenerator({
+      placeProvider: { searchPlaces: vi.fn().mockResolvedValue(places) },
+      routeProvider: {
+        computeRoute: vi
+          .fn()
+          .mockRejectedValueOnce(new Error("Google Routes did not return a route."))
+          .mockResolvedValueOnce({ durationMinutes: 12, distanceMeters: 1_500 }),
+      },
+      aiGenerator: { generate },
+    });
+
+    await expect(generator.generate(mockJejuTripRequest)).resolves.toBe(
+      mockJejuTripResponse,
+    );
+    expect(generate).toHaveBeenCalledWith({
+      request: mockJejuTripRequest,
+      places,
+      routeHints: [
+        {
+          fromPlaceId: "place_2",
+          toPlaceId: "place_3",
+          durationMinutes: 12,
+          distanceMeters: 1_500,
+        },
+      ],
+    });
+  });
 });
