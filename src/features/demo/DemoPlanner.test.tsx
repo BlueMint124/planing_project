@@ -50,6 +50,10 @@ describe("DemoPlanner", () => {
 
     expect(await screen.findByText("추천 일정")).toBeInTheDocument();
     expect(screen.getByText("총 예상 비용")).toBeInTheDocument();
+    expect(screen.getByText("732,000원")).toBeInTheDocument();
+    expect(screen.getByText("항공 70,000원")).toBeInTheDocument();
+    expect(screen.getByText("교통 22,000원")).toBeInTheDocument();
+    expect(screen.getByText("식사 58,000원")).toBeInTheDocument();
     expect(screen.getByText("여행 경로 미리보기")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "공유하기" })).toBeEnabled();
     expect(client.generateTrip).toHaveBeenCalledWith(

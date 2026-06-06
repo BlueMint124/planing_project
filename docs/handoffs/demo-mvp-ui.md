@@ -43,6 +43,13 @@
 - 기존처럼 1단계에서 바로 결과 화면으로 넘어가지 않고, 버튼과 상단 스텝 네비게이션이 현재 단계를 반영한다.
 - 데스크톱 발표 화면을 우선하되 1024px 이하에서는 입력과 요약 패널이 세로로 내려가도록 보강했다.
 
+## 2026-06-06 Travel Cost Coverage
+
+- 발표용 제주 데모 일정에 왕복 항공권, 제주 현지 교통비, 점심/저녁 식사 일정을 명시적으로 추가했다.
+- 결과 화면에는 `비용 반영 항목` 블록을 추가해 항공, 교통, 식사, 관광/체험 비용이 1인당 총액에 포함됐음을 보여준다.
+- 항공권은 실시간 최저가 API가 아니라 발표 안정성을 위한 1인당 추정 비용이다.
+- live AI 프롬프트에도 식사 일정, 현지 교통비, 항공 또는 장거리 이동 비용을 포함하도록 규칙을 추가했다.
+
 ## Verification
 
 통과:
@@ -65,6 +72,13 @@
   - `npm.cmd run build`
   - `npm.cmd run test:e2e -- tests/e2e/demo-polish.spec.ts`
   - 앱 내 브라우저에서 `STEP 1 / 4` -> `STEP 2 / 4` -> 생성 -> `STEP 4 / 4` 결과 표시 확인
+- 항공/교통/식사 비용 반영 검증:
+  - `npm.cmd test -- src\features\trips\mock-trip.test.ts src\features\ai\itinerary-prompt.test.ts src\features\ai\openai-itinerary-generator.test.ts`
+  - `npm.cmd test -- src\features\demo\DemoPlanner.test.tsx`
+  - `npm.cmd run test`
+  - `npm.cmd run lint`
+  - `npm.cmd run build`
+  - `npm.cmd run test:e2e -- tests/e2e/demo-polish.spec.ts`
 
 ## 2026-06-06 Live API First Fallback
 

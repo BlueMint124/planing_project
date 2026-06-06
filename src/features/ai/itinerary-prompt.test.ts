@@ -43,4 +43,16 @@ describe("buildItineraryPrompt", () => {
     expect(prompt.user).toContain("memberCount");
     expect(prompt.user).not.toContain(mockJejuTripRequest.members[0].name);
   });
+
+  it("instructs the model to include meals and transportation costs", () => {
+    const prompt = buildItineraryPrompt({
+      request: mockJejuTripRequest,
+      places: [],
+      routeHints: [],
+    });
+
+    expect(prompt.system).toContain("meal stops");
+    expect(prompt.system).toContain("transportation costs");
+    expect(prompt.system).toContain("flight or long-distance");
+  });
 });

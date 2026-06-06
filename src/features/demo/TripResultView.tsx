@@ -9,6 +9,7 @@ import {
   Flag,
   Leaf,
   MapPinned,
+  Plane,
   Utensils,
   WalletCards,
 } from "lucide-react";
@@ -39,7 +40,28 @@ function getRouteCategories(route: TripGenerationResponse["route"]) {
   return Array.from(new Set(route.map((item) => item.category))).slice(0, 4);
 }
 
+function groupCostsByCategory(route: TripGenerationResponse["route"]) {
+  return Array.from(
+    route
+      .reduce<Map<string, number>>((costs, item) => {
+        costs.set(item.category, (costs.get(item.category) ?? 0) + item.estimatedCost);
+        return costs;
+      }, new Map())
+      .entries(),
+  )
+    .filter(([, cost]) => cost > 0)
+    .sort(([, leftCost], [, rightCost]) => rightCost - leftCost);
+}
+
 function getCategoryIcon(category: string) {
+  if (category.includes("항공")) {
+    return Plane;
+  }
+
+  if (category.includes("교통") || category.includes("이동")) {
+    return CarFront;
+  }
+
   if (category.includes("맛") || category.includes("식")) {
     return Utensils;
   }
@@ -65,6 +87,7 @@ export function TripResultView({
     .map(Number)
     .sort((a, b) => a - b);
   const categories = getRouteCategories(trip.route);
+  const categoryCosts = groupCostsByCategory(trip.route);
   const totalMoveMinutes = trip.route.reduce(
     (sum, item) => sum + item.moveMinutesFromPrevious,
     0,
@@ -121,6 +144,24 @@ export function TripResultView({
               : "예산 초과"}
           </strong>
         </article>
+      </div>
+
+      <div className="cost-breakdown" aria-label="비용 반영 항목">
+        <div>
+          <p className="eyebrow">COST INCLUDED</p>
+          <h3>비용 반영 항목</h3>
+        </div>
+        <div className="cost-chip-row">
+          {categoryCosts.map(([category, cost]) => {
+            const Icon = getCategoryIcon(category);
+            return (
+              <span className="cost-chip" key={category}>
+                <Icon aria-hidden="true" size={16} />
+                {category} {formatKrw(cost)}원
+              </span>
+            );
+          })}
+        </div>
       </div>
 
       {expiresAt ? (

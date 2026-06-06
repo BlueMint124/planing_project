@@ -40,8 +40,8 @@ describe("createOpenAIItineraryGenerator", () => {
     );
     expect(response.tripId).toBe("trip_ai_001");
     expect(response.summary).toEqual({
-      totalEstimatedCost: 380_000,
-      estimatedCostPerPerson: 95_000,
+      totalEstimatedCost: 732_000,
+      estimatedCostPerPerson: 183_000,
       budgetStatus: "within_budget",
     });
   });
