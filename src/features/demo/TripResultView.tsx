@@ -53,6 +53,44 @@ function groupCostsByCategory(route: TripGenerationResponse["route"]) {
     .sort(([, leftCost], [, rightCost]) => rightCost - leftCost);
 }
 
+function clamp(value: number, min: number, max: number) {
+  return Math.min(Math.max(value, min), max);
+}
+
+function createMapPoint(
+  item: TripGenerationResponse["route"][number],
+  index: number,
+) {
+  if (item.coordinates.lat > 35) {
+    return {
+      ...item,
+      index,
+      x: 10,
+      y: 74,
+    };
+  }
+
+  const minLng = 126.25;
+  const maxLng = 126.98;
+  const minLat = 33.32;
+  const maxLat = 33.57;
+  const x = 14 + ((item.coordinates.lng - minLng) / (maxLng - minLng)) * 74;
+  const y = 18 + ((maxLat - item.coordinates.lat) / (maxLat - minLat)) * 62;
+
+  return {
+    ...item,
+    index,
+    x: clamp(x, 12, 88),
+    y: clamp(y, 14, 82),
+  };
+}
+
+function buildRoutePath(points: Array<ReturnType<typeof createMapPoint>>) {
+  return points
+    .map((point, index) => `${index === 0 ? "M" : "L"} ${point.x} ${point.y}`)
+    .join(" ");
+}
+
 function getCategoryIcon(category: string) {
   if (category.includes("항공")) {
     return Plane;
@@ -75,6 +113,83 @@ function getCategoryIcon(category: string) {
   }
 
   return MapPinned;
+}
+
+function PresentationRouteMap({
+  route,
+}: {
+  route: TripGenerationResponse["route"];
+}) {
+  const points = route.map(createMapPoint);
+  const routePath = buildRoutePath(points);
+  const labelPoints = points.slice(0, 8);
+
+  return (
+    <div
+      aria-label="제주 여행 경로 지도"
+      className="route-map-visual presentation-map"
+      role="img"
+    >
+      <svg viewBox="0 0 100 100" role="presentation">
+        <defs>
+          <linearGradient id="jejuLand" x1="0%" x2="100%" y1="0%" y2="100%">
+            <stop offset="0%" stopColor="#e9f7df" />
+            <stop offset="100%" stopColor="#fbfff8" />
+          </linearGradient>
+          <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+            <feDropShadow dx="0" dy="3" floodOpacity="0.14" stdDeviation="2" />
+          </filter>
+        </defs>
+        <path
+          className="jeju-island-shape"
+          d="M16 52 C20 36 36 25 55 27 C75 29 91 39 92 52 C93 64 78 74 55 76 C32 78 13 67 16 52Z"
+          fill="url(#jejuLand)"
+          filter="url(#softShadow)"
+        />
+        <path
+          className="jeju-mountain"
+          d="M46 58 L53 44 L61 58Z"
+          fill="#b8d5b6"
+          opacity="0.78"
+        />
+        <path
+          className="presentation-route-path"
+          d={routePath}
+          fill="none"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        {points.map((point) => (
+          <g
+            aria-label={`${point.index + 1}번 경유지 ${point.placeName}`}
+            className="presentation-map-pin"
+            key={`${point.day}-${point.order}-${point.placeName}`}
+            role="img"
+            style={{
+              transform: `translate(${point.x}px, ${point.y}px)`,
+            }}
+          >
+            <circle r="4.8" />
+            <text dy="1.4" textAnchor="middle">
+              {point.index + 1}
+            </text>
+          </g>
+        ))}
+      </svg>
+      {labelPoints.map((point) => (
+        <span
+          className="presentation-map-label"
+          key={`label-${point.day}-${point.order}-${point.placeName}`}
+          style={{
+            left: `${point.x}%`,
+            top: `${point.y}%`,
+          }}
+        >
+          {point.placeName}
+        </span>
+      ))}
+    </div>
+  );
 }
 
 export function TripResultView({
@@ -236,21 +351,7 @@ export function TripResultView({
               시각화합니다.
             </p>
           </div>
-          <div className="route-map-visual" aria-hidden="true">
-            <MapPinned className="map-pin pin-one" size={34} />
-            <MapPinned className="map-pin pin-two" size={30} />
-            <MapPinned className="map-pin pin-three" size={32} />
-            <svg viewBox="0 0 320 140" role="presentation">
-              <path
-                d="M24 96 C72 18 116 128 162 62 C206 0 226 120 296 38"
-                fill="none"
-                stroke="currentColor"
-                strokeDasharray="8 8"
-                strokeLinecap="round"
-                strokeWidth="5"
-              />
-            </svg>
-          </div>
+          <PresentationRouteMap route={trip.route} />
           <ol>
             {trip.route.map((item) => (
               <li key={`${item.day}-${item.order}-${item.placeName}`}>

@@ -50,6 +50,13 @@
 - 항공권은 실시간 최저가 API가 아니라 발표 안정성을 위한 1인당 추정 비용이다.
 - live AI 프롬프트에도 식사 일정, 현지 교통비, 항공 또는 장거리 이동 비용을 포함하도록 규칙을 추가했다.
 
+## 2026-06-06 Presentation Route Visual
+
+- 지도 API 실패 리스크 없이 발표 화면을 개선하기 위해 `backup/cost-covered-demo-stable` 브랜치와 `demo-cost-covered-stable-20260606` 태그를 먼저 생성했다.
+- 결과 화면의 기존 추상 경로 이미지를 제주도 실루엣 SVG, 좌표 기반 경로 라인, 번호 핀, 주요 장소 라벨로 교체했다.
+- 구현은 `TripResultView` 내부의 발표용 SVG 지도 컴포넌트에 격리해 이후 Google Static Maps 또는 Places Photo API로 교체하기 쉽게 유지했다.
+- 제주 밖 출발지인 김포공항은 제주도 내부 좌표 투영에서 제외하고 출발 핀으로 표시한다.
+
 ## Verification
 
 통과:
@@ -79,6 +86,15 @@
   - `npm.cmd run lint`
   - `npm.cmd run build`
   - `npm.cmd run test:e2e -- tests/e2e/demo-polish.spec.ts`
+- 발표용 지도 시각 개선 검증:
+  - `npm.cmd test -- src\features\demo\TripResultView.test.tsx`
+  - `npm.cmd test -- src\features\demo\TripResultView.test.tsx src\features\demo\DemoPlanner.test.tsx`
+  - `npm.cmd run typecheck`
+  - `npm.cmd run lint`
+  - `npm.cmd test`
+  - `npm.cmd run build`
+  - `CI=true npm.cmd run test:e2e -- tests/e2e/demo-polish.spec.ts`
+  - 앱 내 브라우저에서 `제주 여행 경로 지도`와 번호 핀 표시 확인
 
 ## 2026-06-06 Live API First Fallback
 

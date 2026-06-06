@@ -1190,6 +1190,76 @@ select {
   height: calc(100% - 48px);
 }
 
+.presentation-map {
+  height: 260px;
+  background:
+    radial-gradient(circle at 24% 22%, rgb(255 255 255 / 86%), transparent 16%),
+    linear-gradient(145deg, #cceeff, #eefdf6 72%);
+  color: var(--primary);
+}
+
+.presentation-map::before {
+  display: none;
+}
+
+.presentation-map svg {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.jeju-island-shape {
+  stroke: rgb(255 255 255 / 88%);
+  stroke-width: 1.4;
+}
+
+.jeju-mountain {
+  transform-origin: center;
+}
+
+.presentation-route-path {
+  stroke: var(--primary);
+  stroke-dasharray: 3 3;
+  stroke-width: 1.9;
+  filter: drop-shadow(0 5px 8px rgb(15 159 143 / 22%));
+}
+
+.presentation-map-pin {
+  color: white;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.presentation-map-pin circle {
+  fill: var(--primary);
+  stroke: white;
+  stroke-width: 1.4;
+  filter: drop-shadow(0 5px 8px rgb(15 23 42 / 22%));
+}
+
+.presentation-map-pin text {
+  fill: white;
+  font-size: 4px;
+  font-weight: 900;
+}
+
+.presentation-map-label {
+  position: absolute;
+  z-index: 2;
+  max-width: 118px;
+  transform: translate(-50%, calc(-100% - 9px));
+  border: 1px solid rgb(15 23 42 / 6%);
+  border-radius: 999px;
+  padding: 5px 8px;
+  background: rgb(255 255 255 / 92%);
+  color: var(--foreground);
+  font-size: 11px;
+  font-weight: 900;
+  line-height: 1.2;
+  text-align: center;
+  box-shadow: 0 8px 20px rgb(15 23 42 / 11%);
+}
+
 .map-pin {
   position: absolute;
   z-index: 1;
