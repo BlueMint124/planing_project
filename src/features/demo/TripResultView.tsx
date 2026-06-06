@@ -53,44 +53,6 @@ function groupCostsByCategory(route: TripGenerationResponse["route"]) {
     .sort(([, leftCost], [, rightCost]) => rightCost - leftCost);
 }
 
-function clamp(value: number, min: number, max: number) {
-  return Math.min(Math.max(value, min), max);
-}
-
-function createMapPoint(
-  item: TripGenerationResponse["route"][number],
-  index: number,
-) {
-  if (item.coordinates.lat > 35) {
-    return {
-      ...item,
-      index,
-      x: 10,
-      y: 74,
-    };
-  }
-
-  const minLng = 126.25;
-  const maxLng = 126.98;
-  const minLat = 33.32;
-  const maxLat = 33.57;
-  const x = 14 + ((item.coordinates.lng - minLng) / (maxLng - minLng)) * 74;
-  const y = 18 + ((maxLat - item.coordinates.lat) / (maxLat - minLat)) * 62;
-
-  return {
-    ...item,
-    index,
-    x: clamp(x, 12, 88),
-    y: clamp(y, 14, 82),
-  };
-}
-
-function buildRoutePath(points: Array<ReturnType<typeof createMapPoint>>) {
-  return points
-    .map((point, index) => `${index === 0 ? "M" : "L"} ${point.x} ${point.y}`)
-    .join(" ");
-}
-
 function getCategoryIcon(category: string) {
   if (category.includes("항공")) {
     return Plane;
@@ -115,14 +77,89 @@ function getCategoryIcon(category: string) {
   return MapPinned;
 }
 
+const presentationMapAnchors = [
+  {
+    match: ["김포", "공항 출발"],
+    label: "김포공항",
+    x: 12,
+    y: 72,
+  },
+  {
+    match: ["제주공항", "공항 도착", "공항 복귀"],
+    label: "제주공항",
+    x: 36,
+    y: 38,
+  },
+  {
+    match: ["성산", "섭지코지"],
+    label: "성산권",
+    x: 76,
+    y: 50,
+  },
+  {
+    match: ["동문", "제주 4.3", "돌문화", "비자림", "함덕"],
+    label: "제주시권",
+    x: 50,
+    y: 36,
+  },
+  {
+    match: ["아르떼", "애월"],
+    label: "애월/서부권",
+    x: 24,
+    y: 62,
+  },
+];
+
+function findMapAnchor(item: TripGenerationResponse["route"][number]) {
+  return (
+    presentationMapAnchors.find((anchor) =>
+      anchor.match.some((keyword) => item.placeName.includes(keyword)),
+    ) ?? presentationMapAnchors[1]
+  );
+}
+
+function createPresentationMapPoints(route: TripGenerationResponse["route"]) {
+  const seen = new Set<string>();
+
+  return route
+    .map((item, index) => ({
+      ...item,
+      index,
+      anchor: findMapAnchor(item),
+    }))
+    .filter((point) => {
+      if (seen.has(point.anchor.label)) {
+        return false;
+      }
+
+      seen.add(point.anchor.label);
+      return true;
+    })
+    .slice(0, 5)
+    .map((point, visualIndex) => ({
+      ...point,
+      visualIndex,
+      x: point.anchor.x,
+      y: point.anchor.y,
+      label: point.anchor.label,
+    }));
+}
+
+function buildRoutePath(
+  points: ReturnType<typeof createPresentationMapPoints>,
+) {
+  return points
+    .map((point, index) => `${index === 0 ? "M" : "L"} ${point.x} ${point.y}`)
+    .join(" ");
+}
+
 function PresentationRouteMap({
   route,
 }: {
   route: TripGenerationResponse["route"];
 }) {
-  const points = route.map(createMapPoint);
+  const points = createPresentationMapPoints(route);
   const routePath = buildRoutePath(points);
-  const labelPoints = points.slice(0, 8);
 
   return (
     <div
@@ -140,11 +177,24 @@ function PresentationRouteMap({
             <feDropShadow dx="0" dy="3" floodOpacity="0.14" stdDeviation="2" />
           </filter>
         </defs>
+        <rect
+          className="sea-panel"
+          height="100"
+          rx="12"
+          width="100"
+          x="0"
+          y="0"
+        />
         <path
           className="jeju-island-shape"
-          d="M16 52 C20 36 36 25 55 27 C75 29 91 39 92 52 C93 64 78 74 55 76 C32 78 13 67 16 52Z"
+          d="M18 53 C22 39 36 30 54 31 C73 32 88 42 89 54 C90 66 75 74 55 76 C34 78 15 66 18 53Z"
           fill="url(#jejuLand)"
           filter="url(#softShadow)"
+        />
+        <path
+          className="jeju-coast-line"
+          d="M23 54 C28 45 38 39 54 40 C69 41 80 47 82 55 C75 62 66 66 54 66 C41 66 31 62 23 54Z"
+          fill="none"
         />
         <path
           className="jeju-mountain"
@@ -171,12 +221,13 @@ function PresentationRouteMap({
           >
             <circle r="4.8" />
             <text dy="1.4" textAnchor="middle">
-              {point.index + 1}
+              {point.visualIndex + 1}
             </text>
           </g>
         ))}
       </svg>
-      {labelPoints.map((point) => (
+      <span className="presentation-map-caption">발표용 경로 예시</span>
+      {points.map((point) => (
         <span
           className="presentation-map-label"
           key={`label-${point.day}-${point.order}-${point.placeName}`}
@@ -185,7 +236,7 @@ function PresentationRouteMap({
             top: `${point.y}%`,
           }}
         >
-          {point.placeName}
+          {point.label}
         </span>
       ))}
     </div>

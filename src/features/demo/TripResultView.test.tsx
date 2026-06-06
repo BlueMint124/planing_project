@@ -12,8 +12,9 @@ describe("TripResultView", () => {
     const map = screen.getByRole("img", { name: "제주 여행 경로 지도" });
 
     expect(map).toBeInTheDocument();
-    expect(within(map).getByText("성산일출봉")).toBeInTheDocument();
-    expect(within(map).getByText("아르떼뮤지엄 제주")).toBeInTheDocument();
+    expect(map).toHaveTextContent("발표용 경로 예시");
+    expect(within(map).getByText("성산권")).toBeInTheDocument();
+    expect(within(map).getByText("애월/서부권")).toBeInTheDocument();
     expect(screen.getByLabelText("1번 경유지 김포공항 출발")).toBeInTheDocument();
     expect(
       screen.getByLabelText("2번 경유지 제주공항 도착 및 렌터카 픽업"),

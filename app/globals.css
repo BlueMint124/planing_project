@@ -1193,8 +1193,8 @@ select {
 .presentation-map {
   height: 260px;
   background:
-    radial-gradient(circle at 24% 22%, rgb(255 255 255 / 86%), transparent 16%),
-    linear-gradient(145deg, #cceeff, #eefdf6 72%);
+    radial-gradient(circle at 24% 22%, rgb(255 255 255 / 90%), transparent 18%),
+    linear-gradient(145deg, #bfe9ff, #e7fbf6 72%);
   color: var(--primary);
 }
 
@@ -1208,9 +1208,19 @@ select {
   height: 100%;
 }
 
+.sea-panel {
+  fill: transparent;
+}
+
 .jeju-island-shape {
   stroke: rgb(255 255 255 / 88%);
   stroke-width: 1.4;
+}
+
+.jeju-coast-line {
+  stroke: rgb(52 86 95 / 14%);
+  stroke-dasharray: 2 3;
+  stroke-width: 1;
 }
 
 .jeju-mountain {
@@ -1258,6 +1268,19 @@ select {
   line-height: 1.2;
   text-align: center;
   box-shadow: 0 8px 20px rgb(15 23 42 / 11%);
+}
+
+.presentation-map-caption {
+  position: absolute;
+  left: 16px;
+  top: 14px;
+  z-index: 2;
+  border-radius: 999px;
+  padding: 6px 10px;
+  background: rgb(255 255 255 / 78%);
+  color: var(--muted-foreground);
+  font-size: 11px;
+  font-weight: 900;
 }
 
 .map-pin {
