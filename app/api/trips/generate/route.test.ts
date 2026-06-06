@@ -49,18 +49,13 @@ describe("POST /api/trips/generate", () => {
     );
   });
 
-  it("returns 500 when live generation is not configured", async () => {
+  it("falls back to the demo itinerary when live generation is not configured", async () => {
     vi.stubEnv("DEMO_MODE", "false");
-    vi.spyOn(console, "error").mockImplementation(() => undefined);
+    vi.spyOn(console, "warn").mockImplementation(() => undefined);
 
     const response = await POST(createRequest(mockJejuTripRequest));
 
-    expect(response.status).toBe(500);
-    await expect(response.json()).resolves.toEqual(
-      expect.objectContaining({
-        errorCode: "GENERATION_FAILED",
-        requestId: expect.any(String),
-      }),
-    );
+    expect(response.status).toBe(200);
+    await expect(response.json()).resolves.toEqual(mockJejuTripResponse);
   });
 });

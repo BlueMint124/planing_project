@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { createFallbackTripGenerator } from "@/src/features/trips/fallback-trip-generator";
 import { createTripGenerationService } from "@/src/features/trips/generation-service";
 import { createLiveTripGenerator } from "@/src/features/trips/live-trip-generator";
 import { mockJejuTripResponse } from "@/src/features/trips/mock-trip";
@@ -14,15 +15,28 @@ const logger = {
   error(entry: Record<string, unknown>) {
     console.error(entry);
   },
+  warn(entry: Record<string, unknown>) {
+    console.warn(entry);
+  },
 };
+
+function getLiveGenerationTimeoutMs() {
+  const timeoutMs = Number(process.env.LIVE_GENERATION_TIMEOUT_MS ?? 30_000);
+  return Number.isFinite(timeoutMs) && timeoutMs > 0 ? timeoutMs : 30_000;
+}
 
 function createGenerator() {
   if (process.env.DEMO_MODE === "true") {
     return async () => mockJejuTripResponse;
   }
 
-  return createLiveTripGenerator({
-    env: process.env,
+  return createFallbackTripGenerator({
+    primary: createLiveTripGenerator({
+      env: process.env,
+    }),
+    fallback: () => mockJejuTripResponse,
+    timeoutMs: getLiveGenerationTimeoutMs(),
+    logger,
   });
 }
 

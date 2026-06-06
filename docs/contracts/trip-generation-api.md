@@ -129,3 +129,15 @@
 - `src/features/trips/generation-service.ts`
 - `src/features/trips/live-trip-generator.ts`
 - `app/api/trips/generate/route.ts`
+
+## 2026-06-06 Live API Fallback Update
+
+- `DEMO_MODE=true`: 외부 API를 호출하지 않고 검증된 제주 mock 결과를 반환한다.
+- `DEMO_MODE`가 `true`가 아니면 live OpenAI/Google generator를 먼저 시도한다.
+- live generator에는 `OPENAI_API_KEY`, `GOOGLE_MAPS_API_KEY`가 필요하다.
+- `OPENAI_MODEL`이 없으면 `gpt-5.4-mini`를 사용한다.
+- `LIVE_GENERATION_TIMEOUT_MS`가 없으면 30초를 기본 타임아웃으로 사용한다.
+- live key가 없거나, 외부 API 또는 AI 생성이 실패하거나, 타임아웃이 발생하면 발표 안전성을 위해 제주 mock 결과로 fallback한다.
+- fallback이 사용되면 서버 로그에 `trip_generation_fallback_used` 이벤트와 실패 이유를 남긴다.
+- 입력 검증 실패는 fallback하지 않고 `INVALID_REQUEST` 400 응답을 반환한다.
+- fallback도 사용할 수 없는 생성기 실패 또는 잘못된 생성 결과는 `GENERATION_FAILED` 500 응답으로 처리한다.

@@ -49,6 +49,14 @@
 - `git diff --check`
 - Chrome Playwright smoke: `/` 생성 -> 공유 URL 생성 -> `/share/trip_demo_jeju_001` 조회
 - `npm.cmd run test:e2e -- tests/e2e/demo-polish.spec.ts`
+- `npm.cmd test -- src\features\trips\fallback-trip-generator.test.ts app\api\trips\generate\route.test.ts`
+
+## 2026-06-06 Live API First Fallback
+
+- `POST /api/trips/generate`는 `DEMO_MODE`가 `true`가 아닐 때 live OpenAI/Google generator를 먼저 시도한다.
+- live key가 없거나 provider 실패 또는 `LIVE_GENERATION_TIMEOUT_MS` 초과가 발생하면 발표 흐름을 깨지 않도록 검증된 제주 demo 일정으로 fallback한다.
+- fallback 사용 시 `trip_generation_fallback_used` 이벤트와 원래 실패 이유를 서버 로그에 남긴다.
+- Vercel에 실제 환경 변수를 넣으면 같은 API 라우트에서 실 provider를 사용할 수 있고, 키가 빠진 환경에서도 데모 UI는 유지된다.
 
 ## Remaining Work
 
