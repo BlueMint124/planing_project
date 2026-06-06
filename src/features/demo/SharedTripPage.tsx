@@ -7,6 +7,7 @@ import {
   type TripApiClient,
 } from "@/src/features/trips/api-client";
 import type { TripGenerationResponse } from "@/src/features/trips/contracts";
+import { BrandHeader } from "./BrandHeader";
 import { TripResultView } from "./TripResultView";
 
 interface SharedTripPageProps {
@@ -61,6 +62,8 @@ export function SharedTripPage({ tripId, apiClient }: SharedTripPageProps) {
 
   return (
     <main className="demo-shell shared-shell">
+      <BrandHeader activeStep={4} modeLabel="SHARED" />
+
       {isLoading ? (
         <section className="empty-state">
           <p className="eyebrow">LOADING</p>

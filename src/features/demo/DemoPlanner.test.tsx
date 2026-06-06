@@ -33,14 +33,14 @@ describe("DemoPlanner", () => {
     render(<DemoPlanner apiClient={client} />);
 
     expect(
-      screen.getByRole("heading", { name: "어디로 떠날까요?" }),
+      screen.getByRole("heading", { name: "어떤 여행을 계획할까요?" }),
     ).toBeInTheDocument();
 
     await user.click(screen.getByRole("button", { name: "AI 일정 생성" }));
 
     expect(await screen.findByText("추천 일정")).toBeInTheDocument();
     expect(screen.getByText("총 예상 비용")).toBeInTheDocument();
-    expect(screen.getByText("좌표 기반 동선")).toBeInTheDocument();
+    expect(screen.getByText("여행 경로 미리보기")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "공유하기" })).toBeEnabled();
     expect(client.generateTrip).toHaveBeenCalledWith(
       expect.objectContaining({

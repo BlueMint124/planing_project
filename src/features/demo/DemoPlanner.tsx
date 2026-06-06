@@ -15,6 +15,7 @@ import {
   travelStyleSchema,
 } from "@/src/features/trips/contracts";
 import { mockJejuTripRequest } from "@/src/features/trips/mock-trip";
+import { BrandHeader } from "./BrandHeader";
 import { TripResultView } from "./TripResultView";
 
 interface DemoPlannerProps {
@@ -80,6 +81,7 @@ export function DemoPlanner({
 
   const isGenerating = state === "generating";
   const canShare = Boolean(trip) && state !== "generating";
+  const activeStep = state === "generating" || state === "failed" ? 3 : trip ? 4 : 1;
 
   async function runGeneration() {
     setState("generating");
@@ -98,6 +100,16 @@ export function DemoPlanner({
       const generated = await apiClient.generateTrip(generationRequest);
       setTrip(generated);
       setState("generated");
+      requestAnimationFrame(() => {
+        if (navigator.userAgent.includes("jsdom")) {
+          return;
+        }
+
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      });
     } catch {
       setTrip(null);
       setState("failed");
@@ -196,19 +208,20 @@ export function DemoPlanner({
 
   return (
     <main className="demo-shell">
-      <section className="hero-panel">
+      <BrandHeader activeStep={activeStep} modeLabel="LIVE API" />
+
+      <section className="hero-panel presentation-hero">
         <div>
-          <p className="eyebrow">AI GROUP TRAVEL PLANNER</p>
+          <p className="eyebrow">PRESENTATION READY</p>
           <h1>단체 여행 조건을 넣으면 AI가 일정과 동선을 정리합니다</h1>
           <p>
-            발표 시연에 필요한 핵심 흐름을 한 화면에 모았습니다. 생성 결과는
-            공유 링크로 다시 열 수 있고, 이후 실제 지도와 예약 연동으로 확장할 수
-            있습니다.
+            여행메이트는 지역, 예산, 인원, 취향을 바탕으로 발표에 바로 보여줄 수
+            있는 일정표와 경로 요약을 만듭니다.
           </p>
         </div>
         <div className="demo-status">
           <span>{state}</span>
-          <strong>Demo MVP</strong>
+          <strong>{state === "generating" ? "AI 생성 중" : "Live Ready"}</strong>
         </div>
       </section>
 
@@ -217,7 +230,7 @@ export function DemoPlanner({
           <div className="panel-header">
             <div>
               <p className="eyebrow">TRIP CONDITIONS</p>
-              <h2>어디로 떠날까요?</h2>
+              <h2>어떤 여행을 계획할까요?</h2>
               <p className="panel-copy">
                 지역, 예산, 인원, 취향을 바꾸면 같은 계약으로 API에 요청합니다.
               </p>
@@ -469,11 +482,11 @@ export function DemoPlanner({
             </>
           ) : (
             <div className="empty-state">
-              <p className="eyebrow">READY</p>
-              <h2>조건을 확인하고 생성 버튼을 눌러주세요</h2>
+              <p className="eyebrow">READY TO PLAN</p>
+              <h2>조건을 입력하면 오른쪽에 발표용 일정이 완성됩니다</h2>
               <p>
-                결과 영역에는 일정표, 비용 요약, 좌표 기반 동선, 외부 링크가
-                표시됩니다.
+                생성 후에는 일정 타임라인, 비용 요약, 좌표 기반 경로 미리보기,
+                공유 링크를 한 화면에서 확인할 수 있습니다.
               </p>
             </div>
           )}
