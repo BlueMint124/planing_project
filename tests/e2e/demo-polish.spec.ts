@@ -11,8 +11,11 @@ test("polished demo flow edits inputs, generates, shares, and loads the shared p
   await expect(page.locator(".compact-options .option-button").nth(2)).toHaveClass(
     /selected/,
   );
-  await page.locator(".style-options input").nth(1).check();
-  await page.locator(".style-options input").nth(0).uncheck();
+
+  await page.getByRole("button", { name: "다음: 취향 선택으로" }).click();
+  await expect(page.getByText("STEP 2 / 4")).toBeVisible();
+  await page.locator(".style-card-grid input").nth(1).check();
+  await page.locator(".style-card-grid input").nth(0).uncheck();
   await page.locator(".member-card").first().locator("input").nth(0).fill("지민");
   await page
     .locator(".member-card")
@@ -22,8 +25,10 @@ test("polished demo flow edits inputs, generates, shares, and loads the shared p
     .fill("카페, 사진");
   await page.locator(".member-card").first().locator("input").nth(2).fill("등산");
 
-  await page.locator(".primary-button").click();
+  await page.getByRole("button", { name: "AI 일정 생성" }).click();
+  await expect(page.getByText("STEP 3 / 4")).toBeVisible();
   await expect(page.locator(".result-panel")).toBeVisible();
+  await expect(page.getByText("STEP 4 / 4")).toBeVisible();
   await expect(page.locator(".map-card")).toBeVisible();
 
   await page.locator(".share-card .secondary-button").nth(0).click();

@@ -4,6 +4,7 @@ import { describe, expect, it, vi } from "vitest";
 import { DemoPlanner } from "./DemoPlanner";
 import type { TripApiClient } from "@/src/features/trips/api-client";
 import {
+  type TripGenerationResponse,
   travelStyleSchema,
   tripDurationSchema,
 } from "@/src/features/trips/contracts";
@@ -25,6 +26,15 @@ function createClient(overrides: Partial<TripApiClient> = {}): TripApiClient {
   };
 }
 
+async function goToPreferences(user: ReturnType<typeof userEvent.setup>) {
+  await user.click(screen.getByRole("button", { name: "다음: 취향 선택으로" }));
+}
+
+async function startGeneration(user: ReturnType<typeof userEvent.setup>) {
+  await goToPreferences(user);
+  await user.click(screen.getByRole("button", { name: "AI 일정 생성" }));
+}
+
 describe("DemoPlanner", () => {
   it("generates a demo trip and exposes the result actions", async () => {
     const user = userEvent.setup();
@@ -33,10 +43,10 @@ describe("DemoPlanner", () => {
     render(<DemoPlanner apiClient={client} />);
 
     expect(
-      screen.getByRole("heading", { name: "어떤 여행을 계획할까요?" }),
+      screen.getByRole("heading", { name: "어떤 여행을 계획하고 있나요?" }),
     ).toBeInTheDocument();
 
-    await user.click(screen.getByRole("button", { name: "AI 일정 생성" }));
+    await startGeneration(user);
 
     expect(await screen.findByText("추천 일정")).toBeInTheDocument();
     expect(screen.getByText("총 예상 비용")).toBeInTheDocument();
@@ -56,7 +66,7 @@ describe("DemoPlanner", () => {
 
     render(<DemoPlanner apiClient={client} />);
 
-    await user.click(screen.getByRole("button", { name: "AI 일정 생성" }));
+    await startGeneration(user);
     await user.click(await screen.findByRole("button", { name: "공유하기" }));
 
     expect(
@@ -73,7 +83,7 @@ describe("DemoPlanner", () => {
 
     render(<DemoPlanner apiClient={client} />);
 
-    await user.click(screen.getByRole("button", { name: "AI 일정 생성" }));
+    await startGeneration(user);
 
     await waitFor(() => {
       expect(screen.getByRole("alert")).toHaveTextContent(
@@ -89,6 +99,7 @@ describe("DemoPlanner", () => {
     render(<DemoPlanner apiClient={client} />);
 
     await user.click(screen.getByLabelText("2박 3일"));
+    await goToPreferences(user);
     await user.click(screen.getByLabelText("카페"));
     await user.click(screen.getByLabelText("맛집"));
     await user.click(screen.getByRole("button", { name: "멤버 추가" }));
@@ -119,6 +130,43 @@ describe("DemoPlanner", () => {
     );
   });
 
+  it("navigates through the four presentation steps before showing results", async () => {
+    const user = userEvent.setup();
+    let resolveTrip!: (trip: TripGenerationResponse) => void;
+    const client = createClient({
+      generateTrip: vi.fn(
+        () =>
+          new Promise<TripGenerationResponse>((resolve) => {
+            resolveTrip = resolve;
+          }),
+      ),
+    });
+
+    render(<DemoPlanner apiClient={client} />);
+
+    expect(screen.getByText("STEP 1 / 4")).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { name: "어떤 여행을 계획하고 있나요?" }),
+    ).toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: "다음: 취향 선택으로" }));
+
+    expect(screen.getByText("STEP 2 / 4")).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", {
+        name: "우리에게 딱 맞는 여행 취향을 알려주세요",
+      }),
+    ).toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: "AI 일정 생성" }));
+
+    expect(screen.getByText("STEP 3 / 4")).toBeInTheDocument();
+    expect(screen.getByText("동선과 예산을 계산 중이에요")).toBeInTheDocument();
+    resolveTrip(mockJejuTripResponse);
+    expect(await screen.findByText("STEP 4 / 4")).toBeInTheDocument();
+    expect(await screen.findByText("추천 일정")).toBeInTheDocument();
+  });
+
   it("lets users retry after a failed generation", async () => {
     const user = userEvent.setup();
     const client = createClient({
@@ -130,12 +178,12 @@ describe("DemoPlanner", () => {
 
     render(<DemoPlanner apiClient={client} />);
 
-    await user.click(screen.getByRole("button", { name: "AI 일정 생성" }));
+    await startGeneration(user);
     expect(await screen.findByRole("alert")).toHaveTextContent(
       "일정을 생성하지 못했어요.",
     );
 
-    await user.click(screen.getByRole("button", { name: "다시 시도" }));
+    await user.click(screen.getByRole("button", { name: "동일 조건으로 다시 시도" }));
 
     expect(await screen.findByText("추천 일정")).toBeInTheDocument();
     expect(client.generateTrip).toHaveBeenCalledTimes(2);
@@ -147,7 +195,7 @@ describe("DemoPlanner", () => {
 
     render(<DemoPlanner apiClient={client} />);
 
-    await user.click(screen.getByRole("button", { name: "AI 일정 생성" }));
+    await startGeneration(user);
     await screen.findByText("추천 일정");
     await user.click(screen.getByRole("button", { name: "현재 조건으로 재생성" }));
 

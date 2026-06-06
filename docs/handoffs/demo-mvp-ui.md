@@ -36,6 +36,13 @@
 - Playwright smoke는 `localhost` 기준으로 실행한다. `127.0.0.1`에서는 Next dev hydration이
   붙지 않는 현상이 있어 사용하지 않는다.
 
+## 2026-06-06 Presentation Step Flow
+
+- `codex/presentation-polish-ui` 브랜치에서 레퍼런스 디자인 기준의 4단계 플로우를 추가했다.
+- 1단계는 기본 정보, 2단계는 여행 스타일과 멤버 선호, 3단계는 AI 생성 진행 또는 실패, 4단계는 결과 확인과 공유로 분리했다.
+- 기존처럼 1단계에서 바로 결과 화면으로 넘어가지 않고, 버튼과 상단 스텝 네비게이션이 현재 단계를 반영한다.
+- 데스크톱 발표 화면을 우선하되 1024px 이하에서는 입력과 요약 패널이 세로로 내려가도록 보강했다.
+
 ## Verification
 
 통과:
@@ -50,6 +57,14 @@
 - Chrome Playwright smoke: `/` 생성 -> 공유 URL 생성 -> `/share/trip_demo_jeju_001` 조회
 - `npm.cmd run test:e2e -- tests/e2e/demo-polish.spec.ts`
 - `npm.cmd test -- src\features\trips\fallback-trip-generator.test.ts app\api\trips\generate\route.test.ts`
+- 4단계 플로우 검증:
+  - `npm.cmd test -- src\features\demo\DemoPlanner.test.tsx src\features\demo\SharedTripPage.test.tsx`
+  - `npm.cmd run test`
+  - `npm.cmd run typecheck`
+  - `npm.cmd run lint`
+  - `npm.cmd run build`
+  - `npm.cmd run test:e2e -- tests/e2e/demo-polish.spec.ts`
+  - 앱 내 브라우저에서 `STEP 1 / 4` -> `STEP 2 / 4` -> 생성 -> `STEP 4 / 4` 결과 표시 확인
 
 ## 2026-06-06 Live API First Fallback
 

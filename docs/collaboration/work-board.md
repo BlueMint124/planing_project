@@ -55,10 +55,10 @@
 
 | 기능 | 담당자 | 브랜치 | 상태 | 의존성 | Handoff | PR |
 | --- | --- | --- | --- | --- | --- | --- |
-| 발표용 데모 MVP UI | 주 개발자 | `codex/demo-mvp-ui` | in-progress | 생성/공유 API | `docs/handoffs/demo-mvp-ui.md` | 생성 예정 |
+| 발표용 데모 MVP UI | 주 개발자 | `codex/presentation-polish-ui` | review | 생성/공유 API | `docs/handoffs/demo-mvp-ui.md` | 생성 예정 |
 
 ## 2026-06-06 Shared File Lock Addition
 
 | 파일 또는 경로 | 작업자 | 브랜치 | 이유 | 예상 해제 |
 | --- | --- | --- | --- | --- |
-| 데모 MVP UI, `todo.md`, `README.md` | 주 개발자 | `codex/demo-mvp-ui` | 발표 시연용 입력-생성-결과-공유 흐름 구현 | PR 병합 후 |
+| 데모 MVP UI, `todo.md`, `README.md` | 주 개발자 | `codex/presentation-polish-ui` | 발표 시연용 4단계 입력-생성-결과-공유 흐름 구현 | PR 병합 후 |
